@@ -35,12 +35,12 @@ Implement classes of MCs according to this spec:
 
 In an application create a network of component instances and connections between them as shown here:
 
-| Inputs                 | Instance    | Outputs                |
-| ---------------------- | ----------- | ---------------------- |
-|                        | `Sender#0`  | `Adder#0`, `Divider#0` |
-| `Sender#0`             | `Adder#0`   | `Divider#0`            |
-| `Sender#0`, `Adder#0`  | `Divider#0` | `Writer#0`             |
-| `Adder#0`, `Divider#0` | `Writer#0`  |                        |
+| Inputs                 | Instance    | Outputs                 |
+| ---------------------- | ----------- | ----------------------- |
+|                        | `Sender#0`  | `Adder#0`, `Divider#0`  |
+| `Sender#0`             | `Adder#0`   | `Divider#0`, `Writer#0` |
+| `Sender#0`, `Adder#0`  | `Divider#0` | `Writer#0`              |
+| `Adder#0`, `Divider#0` | `Writer#0`  |                         |
 
 Tick the components for time 0 to 4 and capture the output produced by the writer.
 
