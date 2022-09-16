@@ -7,7 +7,6 @@ class Divider(MicroComponent):
 
     def receive_int(self, value: int) -> None:
         super().receive_int(value=value)
-        assert self.send_func is not None
 
         if self.prev_int is not None:
             # // - integer division operator

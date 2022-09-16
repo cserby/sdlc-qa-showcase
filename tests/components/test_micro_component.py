@@ -5,26 +5,6 @@ import pytest
 from showcase.components import Sender
 
 
-def test_micro_controller_uninitialized_tick():
-    sender = Sender()
-
-    with pytest.raises(
-        expected_exception=AssertionError,
-        match=re.compile(r"not initialized", flags=re.I),
-    ):
-        sender.tick(5)
-
-
-def test_micro_controller_uninitialized_receive_int():
-    sender = Sender()
-
-    with pytest.raises(
-        expected_exception=AssertionError,
-        match=re.compile(r"not initialized", flags=re.I),
-    ):
-        sender.receive_int(5)
-
-
 def test_micro_controller_multi_init():
     sender = Sender()
 

@@ -7,5 +7,4 @@ class Sender(MicroComponent):
 
     def tick(self, time_step: int) -> None:
         super().tick(time_step=time_step)
-        assert self.send_func is not None
         self.send_func(time_step)
