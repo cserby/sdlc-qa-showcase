@@ -1,0 +1,30 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - id: cache-pipenv
+        name: Cache Pipenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+      - name: Install dependecies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        uses: VaultVulp/action-pipenv@v2.0.1
+        with:
+          command: install -d
+      - name: Run pytest
+        uses: VaultVulp/action-pipenv@v2.0.1
+        with:
+          command: run python -m pytest tests/
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: 'junit.xml'

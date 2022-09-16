@@ -1,3 +1,4 @@
 .vscode
 junit.xml
 **/__pycache__
+.coverage
