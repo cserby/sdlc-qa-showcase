@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock
 
+import pytest
 from showcase.components import Divider
 
 
@@ -72,3 +73,22 @@ def test_divider_sends_sum_of_last_two_ints_twice():
     divider.tick(27)
 
     send_func_mock.assert_called_with(1)
+
+
+def test_divider_division_by_zero():
+    divider = Divider()
+
+    send_func_mock = MagicMock()
+
+    divider.initialize(send_func=send_func_mock)
+
+    divider.receive_int(0)
+
+    divider.receive_int(5)
+
+    assert divider.prev_ints == [0, 5]
+
+    with pytest.raises(
+        expected_exception=ZeroDivisionError,
+    ):
+        divider.tick(0)
