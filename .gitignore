@@ -1,1 +1,3 @@
 .vscode
+junit.xml
+**/__pycache__
