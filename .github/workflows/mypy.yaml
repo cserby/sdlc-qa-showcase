@@ -19,7 +19,7 @@ jobs:
         uses: VaultVulp/action-pipenv@v2.0.1
         with:
           command: install -d
-      - name: Install dependecies
+      - name: Run mypy
         uses: VaultVulp/action-pipenv@v2.0.1
         with:
-          command: run mypy
+          command: run mypy .
