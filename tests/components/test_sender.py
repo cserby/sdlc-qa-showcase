@@ -1,11 +1,9 @@
-import re
 from unittest.mock import MagicMock
 
-import pytest
 from showcase.components import Sender
 
 
-def test_sender():
+def test_sender_tick():
     sender = Sender()
 
     send_func_mock = MagicMock()
@@ -16,26 +14,12 @@ def test_sender():
     send_func_mock.assert_called_once_with(5)
 
 
-def test_sender_uninitialized():
-    sender = Sender()
-
-    with pytest.raises(
-        expected_exception=AssertionError,
-        match=re.compile(r"not initialized", flags=re.I),
-    ):
-        sender.tick(5)
-
-
-def test_sender_multi_init():
+def test_sender_receive_int():
     sender = Sender()
 
     send_func_mock = MagicMock()
+
     sender.initialize(send_func=send_func_mock)
+    sender.receive_int(5)
 
-    send_func_mock_2 = MagicMock()
-
-    with pytest.raises(
-        expected_exception=AssertionError,
-        match=re.compile(r"already initialized", flags=re.I),
-    ):
-        sender.initialize(send_func=send_func_mock_2)
+    send_func_mock.assert_not_called()
