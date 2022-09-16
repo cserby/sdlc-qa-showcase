@@ -18,11 +18,19 @@ def test_micro_controller_uninitialized_tick():
 def test_micro_controller_uninitialized_receive_int():
     sender = Sender()
 
-    with pytest.raises(
-        expected_exception=AssertionError,
-        match=re.compile(r"not initialized", flags=re.I),
-    ):
-        sender.receive_int(5)
+    assert sender.prev_ints == []
+
+    sender.receive_int(5)
+
+    assert sender.prev_ints == [5]
+
+    sender.receive_int(6)
+
+    assert sender.prev_ints == [5, 6]
+
+    sender.receive_int(7)
+
+    assert sender.prev_ints == [6, 7]
 
 
 def test_micro_controller_multi_init():
