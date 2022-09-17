@@ -5,10 +5,24 @@ from showcase.components import Writer
 def test_writer_multi(capsys: CaptureFixture[str]):
     writer = Writer()
 
+    writer.tick(1)
+
+    assert capsys.readouterr().out == ""
+
     writer.receive_int(4)
+
+    assert capsys.readouterr().out == ""
+
+    writer.tick(1)
+
+    assert capsys.readouterr().out == "4\n"
+
+    writer.tick(2)
+
+    assert capsys.readouterr().out == ""
 
     writer.receive_int(12314)
 
-    captured = capsys.readouterr()
+    writer.tick(3)
 
-    assert captured.out == "4\n12314\n"
+    assert capsys.readouterr().out == "12314\n"

@@ -5,7 +5,8 @@ class Writer(MicroComponent):
     def __init__(self):
         super().__init__()
 
-    def receive_int(self, value: int) -> None:
-        super().receive_int(value=value)
-
-        print(value)
+    def tick(self, time_step: int) -> None:
+        super().tick(time_step)
+        if len(self.prev_ints) > 0:
+            print(self.prev_ints[0])
+        self.prev_ints = []

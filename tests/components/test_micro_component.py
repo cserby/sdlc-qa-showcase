@@ -18,3 +18,17 @@ def test_micro_controller_multi_init():
         match=re.compile(r"already initialized", flags=re.I),
     ):
         sender.initialize(send_func=send_func_mock_2)
+
+def test_micro_controller_receive_int():
+    sender = Sender()
+
+    assert sender.prev_ints == []
+
+    sender.receive_int(3)
+
+    assert sender.prev_ints == [3]
+
+    for i in range(5):
+        sender.receive_int(i)
+
+    assert sender.prev_ints == [3, 4]

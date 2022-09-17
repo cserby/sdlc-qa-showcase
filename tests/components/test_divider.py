@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, call
 
 import pytest
 from showcase.components import Divider
@@ -12,6 +12,8 @@ def test_divider_doesnt_send_when_first_int_received():
     divider.initialize(send_func=send_func_mock)
 
     divider.receive_int(1)
+
+    divider.tick(1)
 
     send_func_mock.assert_not_called()
 
@@ -27,6 +29,10 @@ def test_divider_sends_ratio_when_two_ints_received():
 
     divider.receive_int(48)
 
+    send_func_mock.assert_not_called()
+
+    divider.tick(1)
+
     send_func_mock.assert_called_once_with(8)
 
 
@@ -40,20 +46,25 @@ def test_divider_sends_ratio_of_last_two_when_many_ints_received():
     for i in range(300, 2000, 72):
         divider.receive_int(i)
 
+    divider.tick(1)
+
     send_func_mock.assert_called_with(1)
 
 
-def test_divider_tick_does_nothing():
+def test_divider_two_ticks_send_the_same():
     divider = Divider()
 
     send_func_mock = MagicMock()
 
     divider.initialize(send_func=send_func_mock)
 
-    for i in range(3):
-        divider.tick(i)
+    for i in range(300, 2000, 72):
+        divider.receive_int(i)
 
-    send_func_mock.assert_not_called()
+    divider.tick(1)
+    divider.tick(2)
+
+    send_func_mock.assert_has_calls([call(1), call(1)])
 
 
 def test_divider_division_by_zero():
@@ -63,9 +74,12 @@ def test_divider_division_by_zero():
 
     divider.initialize(send_func=send_func_mock)
 
-    divider.receive_int(0)
+    for i in range(2):
+        divider.receive_int(i)
+
+    send_func_mock.assert_not_called()
 
     with pytest.raises(expected_exception=ZeroDivisionError):
-        divider.receive_int(48)
+        divider.tick(1)
 
     send_func_mock.assert_not_called()
