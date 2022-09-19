@@ -19,6 +19,7 @@ def test_micro_controller_multi_init():
     ):
         sender.initialize(send_func=send_func_mock_2)
 
+
 def test_micro_controller_receive_int():
     sender = Sender()
 
