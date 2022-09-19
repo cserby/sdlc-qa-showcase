@@ -174,6 +174,10 @@ The procedure for creating ephemeral environments fast will provide return on in
 for newly developed features to be quickly validated by manual checks performed by the developers, or even showcasing/demoing to project
 stakeholders.
 
+Acceptance testing should incorporate input and output validation on all external facing APIs. One useful technique I usually use is
+validation of API requests and responses towards established data shapes, by the means of using a strict serializer / deserializer library
+(e.g. [dataclasses-json](https://github.com/lidatong/dataclasses-json) in Python for JSON-based APIs).
+
 For release testing extra manual checks covering the lower risk user paths might be needed, in order to extend the coverage on the highest
 risks provided the automated regression set. The test definitions (checklists) for these activities should be stored in the same
 repository alongside the other project documentation.
