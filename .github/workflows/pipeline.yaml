@@ -20,7 +20,7 @@ jobs:
         name: Cache Pipenv
         uses: actions/cache@v1
         with:
-          path: ~/.local/share/virtualenvs
+          path: /github/home/.local/share/virtualenvs
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
       - name: Install dependecies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
@@ -43,7 +43,7 @@ jobs:
         name: Cache Pipenv
         uses: actions/cache@v1
         with:
-          path: ~/.local/share/virtualenvs
+          path: /github/home/.local/share/virtualenvs
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
       - name: Install dependecies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
